@@ -86,12 +86,11 @@ const PROJECTS = [
     year: "2025",
     location: "Taichung, Taiwan",
     about: [
-      "宏銓建設品牌視覺專案涵蓋基地圍籬帆布、筆記本、紅包袋等實體應用。",
-      "紅包袋以竹子、銅錢、游魚等吉祥意象呈現，筆記本採用麻布與燙金工藝，並搭配節慶動態賀卡。"
+      "宏銓建設品牌視覺專案涵蓋基地圍籬帆布、筆記本、紅包袋等實體應用。"
     ],
     desc: "宏銓建設基地圍籬帆布、筆記本、紅包袋與節慶動態EDM設計。",
     images: [
-      "images/hongquan/01-cover.jpg",
+      { src: "images/hongquan/01-cover.jpg", desc: "基地圍籬設計" },
       { src: "images/hongquan/02.jpg", desc: "基地圍籬帆布設計" },
       { src: "images/hongquan/03.jpg", desc: "基地圍籬帆布設計" },
       { src: "images/hongquan/04.jpg", desc: "基地圍籬帆布設計" },
