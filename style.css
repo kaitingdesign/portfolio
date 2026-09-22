@@ -1,0 +1,603 @@
+:root {
+  --ink: #111111;
+  --muted: #6b6b6b;
+  --line: #e4e4e4;
+  --bg: #ffffff;
+  --chip-bg: #f2f2f2;
+  --chip-bg-active: #111111;
+  --chip-text-active: #ffffff;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Helvetica Neue", Arial, "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 78px;
+  padding: 0 48px;
+  border-bottom: 1px solid var(--line);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 10;
+}
+
+.logo {
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.tagline {
+  font-size: 12px;
+  color: var(--muted);
+  letter-spacing: 0.03em;
+}
+
+.main-nav {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-link {
+  border: none;
+  background: transparent;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  padding: 7px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  color: var(--ink);
+  font-family: inherit;
+  transition: background 0.15s ease;
+}
+
+.nav-link:hover { background: var(--chip-bg); }
+
+.nav-link.active {
+  background: var(--chip-bg);
+  font-weight: 600;
+}
+
+/* Pages */
+main { min-height: 70vh; }
+
+.page {
+  display: none;
+  padding: 64px 48px 96px;
+}
+
+.page.active { display: block; }
+
+/* 每次切換頁面（導覽列或點作品卡片）：切到順序在後面的頁面由右往左滑入，
+   切回順序在前面的頁面（例如 PROJECT→ABOUT、CONTACT→PROJECT）則由左往右滑入 */
+@keyframes pageSlideInFromRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes pageSlideInFromLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+.page.page-slide-in {
+  animation: pageSlideInFromRight 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+.page.page-slide-in-left {
+  animation: pageSlideInFromLeft 0.45s cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* 靠左對齊到跟頁首 LOGO 同樣的邊界，不置中（維持 max-width 避免內文一行太長） */
+.section-inner {
+  max-width: 1100px;
+  margin: 0;
+}
+
+/* PROJECT 頁面不限制寬度，左右都用跟頁首一樣的 48px 邊界（.page 本身的 padding） */
+.section-inner--wide {
+  max-width: none;
+}
+
+h1 {
+  font-size: 15px;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  margin: 0 0 40px;
+}
+
+h2 {
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  color: var(--muted);
+  font-weight: 700;
+  margin: 32px 0 12px;
+}
+
+/* 大標題＋工作經歷放左邊，姓名＋照片放右邊 */
+.about-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 224px;
+  grid-template-areas:
+    "title photo"
+    "head  photo"
+    "table table";
+  gap: 0 48px;
+  align-items: start;
+}
+
+.about-welcome-title {
+  grid-area: title;
+  font-size: clamp(32px, 4.5vw, 44px);
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--ink);
+  margin: 0 0 24px;
+}
+
+.about-right-col { grid-area: photo; }
+
+.about-right-col { display: flex; flex-direction: column; gap: 16px; }
+
+.about-photo-right img {
+  width: 100%;
+  height: auto;
+  background: #d9d9d9;
+  display: block;
+}
+
+/* EDUCATION / EXPERIENCE：大標題＋條列表格 */
+.about-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin: 64px 0 20px;
+}
+
+.about-section-head:first-child { margin-top: 0; }
+
+/* ABOUT 頁：EXPERIENCE 標題跟下方整排表格 */
+.about-layout-grid .about-section-head { grid-area: head; margin-top: 0; }
+
+/* ABOUT 右側照片是自然比例的高圖，這裡多留一點距離讓表格頂線落在照片下緣之後 */
+.about-layout-grid .about-section-head { margin-bottom: 224px; }
+
+.about-section-label,
+.about-section-tag {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+}
+
+.about-section-title {
+  font-size: clamp(28px, 5vw, 56px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  color: var(--ink);
+  margin: 0;
+}
+
+/* PROJECT 頁的大標題單獨使用（不在 about-section-head 裡），下面要留白 */
+.page-title { margin-bottom: 40px; }
+
+/* .exp-table 才是真正的 grid 容器，每個 .exp-row 用 display:contents 讓底下的
+   欄位直接變成 .exp-table 的 grid item，這樣所有列才會共用同一套欄寬、對齊一致
+   （如果每個 .exp-row 各自是一個 grid，欄寬會各自依內容計算，導致每排對不齊）。 */
+.exp-table {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.3fr auto;
+  align-items: center;
+  column-gap: 16px;
+  border-top: 1px solid var(--line);
+}
+
+.about-layout-grid .exp-table { grid-area: table; }
+
+.exp-row { display: contents; }
+
+.exp-role,
+.exp-type,
+.exp-org,
+.exp-year {
+  padding: 20px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 13px;
+}
+
+.exp-role { font-weight: 600; }
+.exp-type { color: var(--muted); }
+.exp-org { color: var(--ink); }
+
+.exp-year {
+  color: var(--muted);
+  text-align: right;
+  white-space: nowrap;
+}
+
+/* EXPERIENCE 沒有類型欄位，只剩單位／職稱／年份三欄 */
+.exp-table--compact {
+  grid-template-columns: 1.6fr 1.4fr auto;
+}
+
+/* Project filter */
+.filter-bar {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  border: 1px solid var(--line);
+  background: var(--bg);
+  padding: 7px 16px;
+  font-size: 13px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-family: inherit;
+  color: var(--ink);
+  transition: all 0.15s ease;
+}
+
+.filter-btn:hover { border-color: var(--ink); }
+
+.filter-btn.active {
+  background: var(--chip-bg-active);
+  border-color: var(--chip-bg-active);
+  color: var(--chip-text-active);
+}
+
+/* Project grid */
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.project-card {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.project-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+}
+
+.project-card img,
+.project-card video {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+  background: #d9d9d9;
+}
+
+.project-card .card-title {
+  font-size: 13px;
+  padding: 12px 14px;
+  background: #fafafa;
+  color: var(--ink);
+}
+
+/* ---------- Project Detail（工作室風格的作品詳情頁） ---------- */
+/* 每個作品各自的區塊；第一個以外的作品，上方會有分隔線跟小標籤標示新作品開始 */
+.case-block { padding-top: 24px; }
+
+.case-block + .case-block {
+  border-top: 1px solid var(--line);
+  margin-top: 40px;
+}
+
+.case-block-label {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 20px;
+}
+
+.case-title {
+  font-size: clamp(24px, 3.6vw, 44px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+  margin: 0 0 48px;
+}
+
+/* 介紹文字跟資訊表格放同一行：左邊 Overview，右邊 Client/Services/Year/Location
+   一路排開，不用格線分隔，跟標題共用左右都 48px 的邊界 */
+.case-overview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 40px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 80px;
+}
+
+.case-overview-copy {
+  flex: 1 1 380px;
+  max-width: 620px;
+}
+
+.case-tag {
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.case-copy p {
+  font-size: 16px;
+  line-height: 1.85;
+  margin: 0 0 20px;
+  color: var(--ink);
+  text-align: justify;
+  text-justify: inter-character;
+}
+
+.case-overview-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 48px 56px;
+}
+
+.case-meta-item { min-width: 96px; }
+
+.case-meta-label {
+  display: block;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+.case-meta-value {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.case-image-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-bottom: 100px;
+}
+
+.case-image-stack figure {
+  position: relative;
+  margin: 0;
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(.2,.7,.2,1);
+}
+
+/* 圖片簡介平常隱藏，滑鼠移到圖片上才用小字淡入顯示 */
+.case-image-stack figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 10px 20px;
+  font-size: 12px;
+  line-height: 1.6;
+  text-align: center;
+  color: #333333;
+  background: #ffffff;
+  opacity: 0;
+  transition: opacity 0.25s ease;
+  pointer-events: none;
+}
+
+.case-image-stack figure:hover figcaption {
+  opacity: 1;
+}
+
+/* 連續兩張正方形圖片會並排顯示，跟單張滿版圖片一樣左右對齊到 48px 邊界 */
+.case-image-row {
+  display: flex;
+  gap: 24px;
+}
+
+.case-image-row figure {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.case-image-stack figure.in-view {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.case-image-stack img,
+.case-image-stack video {
+  width: 100%;
+  display: block;
+  background: #ededed;
+}
+
+@media (max-width: 860px) {
+  .case-overview { flex-direction: column; gap: 24px; }
+  /* .case-overview-copy 的 flex-basis:380px 在桌機是「寬度」的提示，
+     但手機版 .case-overview 改成直向排列後，主軸變垂直，380px 會被當成「高度」，
+     導致文字下方多出一大塊空白，這裡要重設成跟著內容自然高度。 */
+  .case-overview-copy { flex: none; max-width: none; }
+  .case-overview-meta { gap: 24px 40px; }
+}
+
+@media (max-width: 480px) {
+  .case-image-row { flex-direction: column; }
+}
+
+/* Contact */
+.contact-intro {
+  font-size: 15px;
+  color: var(--muted);
+  white-space: nowrap;
+  margin: 0;
+}
+
+.contact-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.contact-list li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--line);
+  font-size: 15px;
+}
+
+.contact-list li.contact-row {
+  justify-content: flex-start;
+  align-items: flex-end;
+  gap: 64px;
+}
+
+.contact-pair {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.contact-pair--line {
+  margin-left: auto;
+  align-items: flex-end;
+}
+
+.contact-label {
+  color: var(--muted);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+}
+
+.contact-list a {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.contact-list a:hover { text-decoration: underline; }
+
+.contact-qr {
+  width: 88px;
+  height: 88px;
+  display: block;
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 24px 48px;
+  text-align: center;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* Responsive */
+@media (max-width: 860px) {
+  .site-header {
+    flex-direction: column;
+    height: auto;
+    gap: 14px;
+    padding: 20px 24px;
+  }
+  .page { padding: 40px 24px 72px; }
+  .about-layout-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas: "photo" "title" "head" "table";
+    gap: 32px;
+  }
+  .about-right-col { flex-direction: column-reverse; }
+  .about-photo-right { width: 100%; max-width: 168px; }
+  .about-welcome-title { margin-bottom: 0; margin-top: -20px; }
+  .project-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-section-head { flex-direction: column; align-items: flex-start; gap: 6px; }
+  .about-layout-grid .about-section-head { margin-top: -26px; margin-bottom: 8px; }
+  /* 手機版欄寬太窄，3 欄擠成 2 欄 grid 會讓每排的欄位錯位對不上；
+     改成每個 .exp-row 自己是一個直向排列的區塊，單位／職稱／年份都清楚寫在同一排裡。 */
+  .exp-table,
+  .exp-table--compact {
+    display: block;
+    grid-template-columns: none;
+    margin-top: -20px;
+  }
+  .exp-row {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .exp-role,
+  .exp-type,
+  .exp-org,
+  .exp-year {
+    padding: 0;
+    border-bottom: none;
+  }
+  .exp-org { order: 1; font-size: 15px; font-weight: 600; }
+  .exp-role { order: 2; font-weight: 400; color: var(--muted); }
+  .exp-year { order: 3; text-align: left; }
+
+  /* 手機版 CONTACT：跟 EXPERIENCE 一樣改成直向堆疊，每項資訊自己一行，不會被擠出畫面外 */
+  .contact-intro {
+    white-space: normal;
+    margin-bottom: 8px;
+  }
+  .contact-list li.contact-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+  }
+  .contact-pair {
+    width: 100%;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .contact-pair--line {
+    margin-left: 0;
+    align-items: center;
+  }
+}
+
+@media (max-width: 520px) {
+  .project-grid { grid-template-columns: 1fr; }
+
+  /* 手機版縮圖不裁切，完整顯示圖片原始比例（電腦版維持填滿裁切） */
+  .project-card img,
+  .project-card video {
+    aspect-ratio: auto;
+    height: auto;
+    object-fit: contain;
+    background: #f2f2f2;
+  }
+}

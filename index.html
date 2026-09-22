@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Kaiting Chuang | Portfolio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="site-header">
+  <div class="logo">Kaiting Chuang</div>
+  <nav class="main-nav">
+    <button class="nav-link" data-target="about">ABOUT</button>
+    <button class="nav-link active" data-target="project">PROJECT</button>
+    <button class="nav-link" data-target="contact">CONTACT</button>
+  </nav>
+  <div class="tagline">Welcome to my portfolio</div>
+</header>
+
+<main>
+
+  <!-- ABOUT -->
+  <section id="about" class="page">
+    <!-- 大標題＋工作經歷放左邊，姓名＋照片放右邊，整排左右對齊到跟頁首一樣的 48px 邊界 -->
+    <div class="section-inner section-inner--wide">
+      <div class="about-layout-grid">
+        <h1 class="about-welcome-title">莊凱婷</h1>
+
+        <div class="about-section-head">
+          <h2 class="about-section-title">EXPERIENCE</h2>
+        </div>
+        <div class="exp-table exp-table--compact">
+          <div class="exp-row">
+            <div class="exp-org">演繹學廣告企劃</div>
+            <div class="exp-role">視覺設計</div>
+            <div class="exp-year">2024.04–2026.06</div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-org">誠品股份有限公司</div>
+            <div class="exp-role">美術設計</div>
+            <div class="exp-year">2022.04–2024.04</div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-org">德醫健康事業股份有限公司</div>
+            <div class="exp-role">行銷美編設計</div>
+            <div class="exp-year">2021.10–2022.04</div>
+          </div>
+          <div class="exp-row">
+            <div class="exp-org">滿分創意行銷有限公司</div>
+            <div class="exp-role">平面設計</div>
+            <div class="exp-year">2019.07–2021.08</div>
+          </div>
+        </div>
+
+        <div class="about-right-col">
+          <div class="about-photo-right">
+            <img src="images/profile/01-cover.jpg" alt="莊凱婷">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECT -->
+  <section id="project" class="page active">
+    <div class="section-inner section-inner--wide">
+      <h1 class="about-section-title page-title">PROJECT</h1>
+
+      <div class="filter-bar" id="filterBar"></div>
+
+      <div class="project-grid" id="projectGrid"></div>
+    </div>
+  </section>
+
+  <!-- PROJECT DETAIL (作品詳情頁，點作品卡片後動態產生內容；
+       繼續往下滾動會自動接續下一個作品；要返回列表可點上方導覽列的 PROJECT) -->
+  <section id="detail" class="page">
+    <div class="section-inner section-inner--wide" id="detailInner"></div>
+  </section>
+
+  <!-- CONTACT：文字排版跟 ABOUT 頁的 EXPERIENCE 那個區塊一樣
+       （左右括號小標籤 + 大標題，內容在下方全寬顯示） -->
+  <section id="contact" class="page">
+    <div class="section-inner section-inner--wide">
+      <div class="about-section-head">
+        <h2 class="about-section-title">CONTACT</h2>
+      </div>
+
+      <ul class="contact-list">
+        <li class="contact-row">
+          <p class="contact-intro">歡迎透過以下方式與我聯繫，期待有機會進一步面談。</p>
+          <span class="contact-pair"><span class="contact-label">Email</span><a href="mailto:kaiting1023@gmail.com">kaiting1023@gmail.com</a></span>
+          <span class="contact-pair"><span class="contact-label">Phone</span><a href="tel:+886911558945">0911 558 945</a></span>
+          <span class="contact-pair contact-pair--line"><span class="contact-label">LINE</span><img class="contact-qr" src="images/contact/line-qr.jpg" alt="LINE QR Code"></span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <p>&copy; 2026 Kaiting Chuang. All Rights Reserved.</p>
+</footer>
+
+<script src="projects-data.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
